@@ -1,0 +1,1 @@
+To jest zawartosc niepustego pliku tekstowego z uprawnieniami 777
