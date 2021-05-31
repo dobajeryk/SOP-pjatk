@@ -20,40 +20,43 @@
 # Jak odaplić?
 #./zadanie03.sh zadanie03/plik-wejsciowy.txt zadanie03/plik-wyjsciowy.txt
 
-SILNIA=1
+silnia=1
 
-silnia() {
-  SILNIA=1
+oblicz_silnie() {
+  silnia=1
   for ((i = 2; i <= $1; i++)); do
-    SILNIA=$(($SILNIA * $i))
+    silnia=$(($silnia * $i))
   done
 }
 
 PLIK_WEJSCIOWY=$1
 PLIK_WYJSCIOWY=$2
 
-ZAWAROSC_PLIKU=$(cat $PLIK_WEJSCIOWY)
+rm "$PLIK_WYJSCIOWY"
 
 RE_DODATNIA="^[0-9]*$"
 RE_UJEMNA="^-[0-9]*$"
 
-ILE_UJEMNYCH=0
-LICZBA_CYFR=0
+ilosc_ujemnych=0
+ilosc_cyfr=0
 
-for WYRAZ in $ZAWAROSC_PLIKU; do
-  if [[ $WYRAZ =~ $RE_DODATNIA ]]; then
-    silnia "$WYRAZ" >>"$PLIK_WYJSCIOWY"
-    LICZBA_CYFR=$((LICZBA_CYFR + ${#SILNIA}))
-    echo "$SILNIA" >> "$PLIK_WYJSCIOWY"
-  elif [[ $WYRAZ =~ $RE_UJEMNA ]]; then
-    ILE_UJEMNYCH=$(($ILE_UJEMNYCH + 1))
-    echo "$WYRAZ" >>"$PLIK_WYJSCIOWY"
-  else
-    echo "$WYRAZ" >>"$PLIK_WYJSCIOWY"
-  fi
-done
+while read linia; do
+  for wyraz in $linia; do
+    if [[ $wyraz =~ $RE_DODATNIA ]]; then
+      oblicz_silnie "$wyraz" >>"$PLIK_WYJSCIOWY"
+      ilosc_cyfr=$((ilosc_cyfr + ${#silnia}))
+      echo -n "$silnia " >>"$PLIK_WYJSCIOWY"
+    elif [[ $wyraz =~ $RE_UJEMNA ]]; then
+      ilosc_ujemnych=$(($ilosc_ujemnych + 1))
+      echo -n "$wyraz " >>"$PLIK_WYJSCIOWY"
+    else
+      echo -n "$wyraz " >>"$PLIK_WYJSCIOWY"
+    fi
+  done
+  echo >>"$PLIK_WYJSCIOWY"
+done <"$PLIK_WEJSCIOWY"
 
-echo "Liczb cyfr w liczbach, które są silniami to: $LICZBA_CYFR" >>"$PLIK_WYJSCIOWY"
-echo "Liczba liczb ujemnych to: $ILE_UJEMNYCH" >>"$PLIK_WYJSCIOWY"
+echo "Liczb cyfr w liczbach, które są silniami to: $ilosc_cyfr" >>"$PLIK_WYJSCIOWY"
+echo "Liczba liczb ujemnych to: $ilosc_ujemnych" >>"$PLIK_WYJSCIOWY"
 
 exit 0
