@@ -11,19 +11,19 @@
 KATALOG=$1
 KATALOGI=$(find $KATALOG -type d)
 
-for PODKATALOG in $KATALOGI; do
+for podkatalog in $KATALOGI; do
   RE="[A-Z].*[.sh|.exe]?$"
-  PLIKI=$(ls $PODKATALOG)
-  LICZNIK=0
-  for PLIK in $PLIKI; do
-    if [[ $PLIK =~ $RE ]]; then
-      LICZNIK=$(($LICZNIK + 1))
+  pliki=$(ls $podkatalog)
+  licznik=0
+  for plik in $pliki; do
+    if [[ $plik =~ $RE ]]; then
+      licznik=$((licznik + 1))
     fi
   done
-  if (($LICZNIK >= 3)); then
-    echo "W katalogu o nazwie $PODKATALOG znajduja się przynajmniej trzy takie pliki"
+  if ((licznik >= 3)); then
+    echo "W katalogu o nazwie $podkatalog znajduja się przynajmniej trzy takie pliki"
   else
-    echo "W katalogu o nazwie $PODKATALOG NIE znajduja się przynajmniej trzy takie pliki"
+    echo "W katalogu o nazwie $podkatalog NIE znajduja się przynajmniej trzy takie pliki"
   fi
 done
 
