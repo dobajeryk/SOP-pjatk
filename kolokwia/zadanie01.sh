@@ -12,7 +12,7 @@ KATALOG=$1
 KATALOGI=$(find $KATALOG -type d)
 
 for podkatalog in $KATALOGI; do
-  RE="[A-Z].*[.sh|.exe]?$"
+  RE="^[A-Z].*[.sh|.exe]?$"
   pliki=$(ls $podkatalog)
   licznik=0
   for plik in $pliki; do
