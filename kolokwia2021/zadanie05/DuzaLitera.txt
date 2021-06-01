@@ -1,0 +1,1 @@
+to jest zawartosc pliku i nie ma tutaj ani jednej duzej/wielkiej litery
