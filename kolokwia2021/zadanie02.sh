@@ -13,7 +13,7 @@ read -p "Podaj nazwę pliku P " PLIK_P
 
 for argument in "$@"; do
   if [ -s "$argument" ] && [ -f "$argument" ]; then
-    liczba_znakow=$(wc -w < $argument)
+    liczba_znakow=$(wc -c < $argument)
     uprawnienia=$(ls -l $argument | cut -c 2-4) # Przyjmuje, ze mam wypisac uprawnienia wlasciciela
     echo "Nazwa pliku: $argument, liczba znakow $liczba_znakow, posiadane uprawnienia $uprawnienia" >> $PLIK_P
   fi
